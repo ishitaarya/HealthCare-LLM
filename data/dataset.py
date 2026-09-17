@@ -1,0 +1,33 @@
+import torch
+from torch.utils.data import Dataset
+
+
+class LanguageModelDataset(Dataset):
+    """
+    Dataset for causal language-model training.
+
+    Each sample contains:
+        input_ids  -> tokens the model sees
+        target_ids -> tokens the model should predict
+    """
+
+    def __init__(self, token_ids, context_length):
+        self.token_ids = token_ids
+        self.context_length = context_length
+
+    def __len__(self):
+        return len(self.token_ids) - self.context_length
+
+    def __getitem__(self, index):
+        input_ids = self.token_ids[
+            index:index + self.context_length
+        ]
+
+        target_ids = self.token_ids[
+            index + 1:index + self.context_length + 1
+        ]
+
+        return (
+            torch.tensor(input_ids, dtype=torch.long),
+            torch.tensor(target_ids, dtype=torch.long)
+        )
