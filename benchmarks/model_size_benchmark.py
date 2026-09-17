@@ -1,8 +1,8 @@
 """Benchmark small model configurations on the local development machine.
 
-This benchmark measures parameter count, CPU training-step time, and peak
-Python-process memory for representative configurations. It is intentionally
-small so it can run on a CPU-only laptop.
+This benchmark measures parameter count and CPU training-step time for
+representative configurations. It is intentionally small so it can run on a
+CPU-only laptop.
 """
 
 import gc
@@ -14,7 +14,7 @@ import torch
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from model.llm import HealthcareLLM
+from model.llm import LLM
 
 
 CONFIGS = [
@@ -53,7 +53,7 @@ def benchmark(config, steps=5, batch_size=2):
     gc.collect()
     torch.set_num_threads(max(1, min(6, os.cpu_count() or 1)))
 
-    model = HealthcareLLM(
+    model = LLM(
         vocab_size=config["vocab_size"],
         context_length=config["context_length"],
         embedding_dim=config["embedding_dim"],
@@ -84,11 +84,12 @@ def benchmark(config, steps=5, batch_size=2):
         optimizer.step()
 
     elapsed = time.perf_counter() - start
+    parameters = count_parameters(model)
 
     result = {
         "name": config["name"],
-        "parameters": count_parameters(model),
-        "parameters_m": count_parameters(model) / 1_000_000,
+        "parameters": parameters,
+        "parameters_m": parameters / 1_000_000,
         "seconds_per_step": elapsed / steps,
         "final_loss": loss.item(),
     }
