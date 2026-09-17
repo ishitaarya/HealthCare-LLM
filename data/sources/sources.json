@@ -1,0 +1,34 @@
+[
+  {
+    "id": "medlineplus",
+    "name": "MedlinePlus",
+    "category": "patient_health_information",
+    "status": "candidate",
+    "license_review": "required",
+    "notes": "Use only content whose reuse terms permit the intended training use. Record source URLs and retrieval metadata."
+  },
+  {
+    "id": "pmc_oa_subset",
+    "name": "PubMed Central Open Access Subset",
+    "category": "biomedical_literature",
+    "status": "candidate",
+    "license_review": "required_per_article",
+    "notes": "Article licenses vary. Retain article-level license and provenance metadata."
+  },
+  {
+    "id": "pubmed",
+    "name": "PubMed",
+    "category": "biomedical_literature_metadata_and_abstracts",
+    "status": "candidate",
+    "license_review": "required",
+    "notes": "Do not assume that all indexed full text is reusable. Verify the rights for every corpus component."
+  },
+  {
+    "id": "mimic_iv",
+    "name": "MIMIC-IV",
+    "category": "clinical_data",
+    "status": "restricted",
+    "license_review": "required",
+    "notes": "Requires the applicable PhysioNet access process. Excluded from the initial unrestricted corpus."
+  }
+]
